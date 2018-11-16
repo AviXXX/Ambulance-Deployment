@@ -1,0 +1,49 @@
+<html>
+<head>
+  
+  <title>Google Maps Multiple Markers</title>
+  <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+</head>
+<body>
+  <div id="map" style="height: 600px; width: 1280px;">
+</div>
+<script type="text/javascript">
+    var locations = [
+      ['Sembakkam', 12.92344920, 80.15876940, 1],
+      ['Poonamallee', 13.04726090, 80.09453070, 2],
+      ['Nerkundram', 13.06783910, 80.18591830, 3],
+      ['Pammal', 12.97807310, 80.13684350, 4],
+      ['Puzhithivakkam (Ullagaram)', 12.96978390, 80.19428230, 5],
+      ['Puzhal', 13.17098380, 80.19910950, 6],
+      ['Thirunindravur', 13.11979980, 80.03071730, 7],
+      ['Tiruverkadu', 13.07063650, 80.12897880, 8],
+      ['Palavakkam', 12.96165120, 80.25963990, 9],
+      ['Maraimalainagar', 12.78462720, 80.02543400, 10]
+    ];
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 10,
+      center: new google.maps.LatLng(13.0827, 80.2707),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var infowindow = new google.maps.InfoWindow();
+
+    var marker, i;
+
+    for (i = 0; i < locations.length; i++) { 
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        map: map
+      });
+
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent(locations[i][0]);
+          infowindow.open(map, marker);
+        }
+      })(marker, i));
+    }
+  </script>
+</body>
+</html>
